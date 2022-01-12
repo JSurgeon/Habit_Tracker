@@ -11,8 +11,9 @@ class Database():
         else:
             self.df = pd.DataFrame()
 
-    def return_habits(self):
-        return self.df.columns
+    def get_habits(self):
+        return self.df.columns[3:]
+
     def display_all(self):
         print(self.df)
 
