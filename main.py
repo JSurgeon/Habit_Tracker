@@ -13,14 +13,39 @@ class Main():
         print("Welcome!")
     
     def create_entry(self):
+
+        # track time/date entry is created
+        now = datetime.now()
+
+        # empyt dictionary object to hold all entry items
+        dict = {}
+
+        # add time items to dictionary
+        dict["Day of Week"] = now.weekday()   # need to implement string conversion of DoW
+        dict["Date"] = now.date().__str__()   # should i be using __str__()? without it, dict["Date"] = date.datetime({date})
+        
         # get all habits already in database
         habits = self.data.get_habits()
+        
+        # for each habit
         for v in habits:
-            print(v)
-        now = datetime.now()
-        print(now)
+            completed = bool(int(input(f'Did you complete "{v}" today? 0 for no, 1 for yes\n')))
+            dict[f'{v}'] = completed
 
-    def display_or_create(self, bool):
+        for k, v  in dict.items():
+            print(k, v)
+        self.data.add_entry(dict)
+
+        ##########################################
+        # need to add editing possibilities here #  (could also possibly add in the habits loop. IE check for edit before moving on to next habit
+        ##########################################
+
+        return self.display_or_create(bool = 1)
+
+
+    def display_or_create(self, bool = None):
+        # bool == 1, display all data;
+        # bool == 2, create new entry;
         if bool == 1:
             return self.data.display_all()
         
@@ -28,9 +53,9 @@ class Main():
             return self.create_entry()
         
         else:
-            i = input("Please choose from the following options\n(1) Display current data\n(2) Create new habit entry")
-            return self.display_or_create(i)
+            i = int(input("Please choose from the following options\n(1) Display current data\n(2) Create new habit entry\n"))
+            return self.display_or_create(bool = i)
     
     
 obj = Main()
-print(obj.create_entry())
+obj.run()

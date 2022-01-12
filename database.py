@@ -12,9 +12,11 @@ class Database():
             self.df = pd.DataFrame()
 
     def get_habits(self):
-        return self.df.columns[3:]
+        return self.df.columns[2:]
 
     def display_all(self):
-        print(self.df)
+        print(self.df.to_string())
 
-    
+    def add_entry(self, entry):
+        self.df = self.df.append(entry, ignore_index = True)
+        return
