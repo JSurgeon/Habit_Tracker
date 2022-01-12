@@ -3,14 +3,20 @@ from database import Database
 from datetime import datetime
 
 DAY_OF_WEEK = {
-    1: "Monday",
-    2: "Tuesday",
-    3: "Wednesday",
-    4: "Thursday",
-    5: "Friday",
-    6: "Saturday",
-    7: "Sunday"
+    0: "Monday",
+    1: "Tuesday",
+    2: "Wednesday",
+    3: "Thursday",
+    4: "Friday",
+    5: "Saturday",
+    6: "Sunday"
 }
+
+# To Do
+# need to add functionality to ADD a new habit
+# add functionality to edit entered values before they are written (corresponding placement marked below)
+# error checking inputs with try
+
 
 class Main():
     data = Database("Practice.csv")
@@ -22,7 +28,7 @@ class Main():
             self.display_or_create(bool = 1)
 
         self.data.write()
-        
+
 
     def welcome(self):
         print("Welcome!")
@@ -37,11 +43,14 @@ class Main():
         dict = {}
 
         # add time items to dictionary
-        dict["Day of Week"] = DAY_OF_WEEK[now.weekday()]   # need to implement string conversion of DoW
+        dict["Weekday"] = DAY_OF_WEEK[now.weekday()]   # need to implement string conversion of DoW
         dict["Date"] = now.date().__str__()   # should i be using __str__()? without it, dict["Date"] = date.datetime({date})
         
         # get all habits already in database
         habits = self.data.get_habits()
+        
+        # remind user of date
+        print(f'Filling data for {dict["Weekday"]} {dict["Date"]}')
         
         # for each habit
         for v in habits:
@@ -56,7 +65,8 @@ class Main():
         # (could also possibly add in the habits loop. IE check for edit before moving on to next habit
         ##########################################
 
-        # need to add functionality to ADD a new habit
+        
+        
 
         return self.data.add_entry(dict)
 
@@ -83,6 +93,7 @@ class Main():
             i = int(input("Please choose from the following options\n(1) Display current data\n(2) Create new habit entry\n"))
             return self.display_or_create(bool = i, flag = True)
     
+        
     
 obj = Main()
 obj.run()

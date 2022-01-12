@@ -26,9 +26,10 @@ class Database():
         if type(entry) != dict: 
             return False
         
-        self.df = self.df.append(entry, ignore_index = True)
+
+        self.df = self.df.append(pd.Series(entry), ignore_index = True)
         return True
 
     def write(self):
         '''Writes the DataFrame to a csv'''
-        self.df.to_csv(self.file)
+        self.df.to_csv(self.file, index = False)
